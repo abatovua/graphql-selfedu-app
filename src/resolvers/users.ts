@@ -1,6 +1,5 @@
 import { Arg, Field, InputType, Mutation, Query, Resolver } from 'type-graphql';
 import { getMongoRepository, MongoRepository } from 'typeorm';
-import { ObjectID, ObjectId } from 'mongodb'
 import { omitBy, isNil, pick } from 'lodash'
 
 import { User } from '~/entities/user';
@@ -41,7 +40,7 @@ export class UsersResolver {
 
   @Query(() => User, { nullable: true })
   async user(@Arg('id') userId: string): Promise<User | undefined> {
-    return await this.repository.findOne({ id: new ObjectId(userId) });
+    return await this.repository.findOne(userId);
   }
 
   @Mutation(() => User)

@@ -5,4 +5,12 @@ const router = new Router({
   strict: true
 });
 
+router
+  .all('/graphl', () => {
+    /* should be rewritten by appollo */
+  })
+  .get('/', async ctx => {
+    ctx.body = { status: 'OK' };
+  });
+
 export default router
