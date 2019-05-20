@@ -1,14 +1,8 @@
-import { Arg, Field, InputType, Mutation, Query, Resolver } from 'type-graphql';
+import { Arg, Field, InputType, Mutation, Query, Resolver, ArgsType, Args, Int } from 'type-graphql';
 import { getMongoRepository, MongoRepository } from 'typeorm';
-import { omitBy, isNil, pick } from 'lodash'
+import { isNil, chain } from 'lodash';
 
 import { User } from '~/entities/user';
-
-@InputType()
-export class NewUser implements Partial<User> {
-  @Field() firstName: string;
-  @Field() lastName: string;
-}
 
 @InputType()
 export class UserFilter implements Partial<User> {
@@ -16,7 +10,25 @@ export class UserFilter implements Partial<User> {
   @Field({ nullable: true }) lastName?: string;
 }
 
-@Resolver(() => User)
+@ArgsType()
+class GetUsersArgs {
+  @Field({ nullable: true })
+  userFilter?: UserFilter;
+
+  @Field(type => Int, { nullable: true, defaultValue: 0 })
+  skip?: number;
+
+  @Field(type => Int, { nullable: true, defaultValue: 10 })
+  take?: number;
+}
+
+@InputType()
+export class NewUser implements Partial<User> {
+  @Field() firstName: string;
+  @Field() lastName: string;
+}
+
+@Resolver(of => User)
 export class UsersResolver {
   private repository: MongoRepository<User>;
 
@@ -24,31 +36,25 @@ export class UsersResolver {
     this.repository = getMongoRepository(User);
   }
 
-  @Query(() => [User])
-  async users(
-    @Arg('filter', { nullable: true }) userFilter?: UserFilter,
-    @Arg('take', { nullable: true }) take: number = 10,
-    @Arg('skip', { nullable: true }) skip: number = 0,
-  ): Promise<User[]> {
-    const options = omitBy(
-      pick(userFilter, ['firstName', 'lastName']),
-      isNil,
-    );
+  @Query(type => [User])
+  async users(@Args() { userFilter, skip, take }: GetUsersArgs): Promise<User[]> {
+    const options = chain(userFilter)
+      .pick(['firstName', 'lastName'])
+      .omitBy(isNil)
+      .mapValues(v => new RegExp(`${v}`, 'i'))
+      .value();
 
-    return await this.repository.find({ ...options, skip, take });
+    return this.repository.find({ where: options, skip, take });
   }
 
-  @Query(() => User, { nullable: true })
+  @Query(type => User, { nullable: true })
   async user(@Arg('id') userId: string): Promise<User | undefined> {
-    return await this.repository.findOne(userId);
+    return this.repository.findOne(userId);
   }
 
-  @Mutation(() => User)
-  async addUser(@Arg('user') userData: NewUser): Promise<User> {
-    const user = new User()
-    user.firstName = userData.firstName
-    user.lastName = userData.lastName
-
-    return await this.repository.save(user);
+  @Mutation(type => User)
+  async addUser(@Arg('newUser') newUser: NewUser): Promise<User> {
+    const user = new User(newUser);
+    return this.repository.save(user);
   }
 }

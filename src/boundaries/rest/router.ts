@@ -2,7 +2,7 @@ import Router from 'koa-router';
 
 const router = new Router({
   sensitive: true,
-  strict: true
+  strict: true,
 });
 
 router
@@ -13,4 +13,4 @@ router
     ctx.body = { status: 'OK' };
   });
 
-export default router
+export default router;

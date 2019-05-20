@@ -1,9 +1,9 @@
-import 'reflect-metadata'
+import 'reflect-metadata';
 
-import { bootstrap } from '~/bootstraper'
-import * as database from '~/boundaries/database'
-import * as httpServer from '~/boundaries/http-server'
-import * as graphql from '~/boundaries/graphql'
+import { bootstrap } from '~/bootstraper';
+import * as database from '~/boundaries/database';
+import * as httpServer from '~/boundaries/http-server';
+import * as graphql from '~/boundaries/graphql';
 
 async function start() {
   await database.start();
@@ -18,5 +18,6 @@ async function stop() {
 }
 
 if (!module.parent) {
+  // tslint:disable-next-line
   bootstrap(start, stop);
 }

@@ -28,9 +28,14 @@
     "rootDir": ".",
     "strictFunctionTypes": true,
     "strictNullChecks": true,
-    "target": "es2017"
+    "target": "es2017",
+    "plugins": [
+      {
+        "name": "typescript-tslint-plugin"
+      }
+    ]
   },
   "include": [
     "src/**/*"
-  ]
+  ],
 }

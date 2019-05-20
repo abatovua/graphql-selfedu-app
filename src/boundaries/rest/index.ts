@@ -24,7 +24,7 @@ async function errorHandler(ctx: Context, next: () => Promise<void>) {
     logger.trace({ headers: ctx.request.header, url: ctx.originalUrl }, 'New http request');
     await next().catch(error => logger.error(error));
   } catch (error) {
-    logger.error('error')
+    logger.error('error');
     const code = error.status || 500;
     ctx.status = code;
     ctx.type = 'application/json';
@@ -37,4 +37,4 @@ async function errorHandler(ctx: Context, next: () => Promise<void>) {
   }
 }
 
-export default app
+export default app;

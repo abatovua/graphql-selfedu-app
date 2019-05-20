@@ -30,7 +30,7 @@
       ]
     ],
     "object-literal-sort-keys": false,
-    "ordered-imports": true,
+    "ordered-imports": false,
     "semicolon": [
       true,
       "always"
@@ -39,6 +39,7 @@
       true,
       "ban-keywords",
       "check-format"
-    ]
+    ],
+    "trailing-comma": true
   }
 }
