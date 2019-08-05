@@ -37,9 +37,10 @@
     ],
     "variable-name": [
       true,
-      "ban-keywords",
-      "check-format"
+      "ban-keywords"
     ],
-    "trailing-comma": true
-  }
+    "trailing-comma": true,
+    "prettier": true
+  },
+  "rulesDirectory": ["tslint-plugin-prettier"]
 }

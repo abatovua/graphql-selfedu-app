@@ -13,8 +13,8 @@ app.use(
     onerror: (error, ctx) => {
       logger.warn({ error, ctx }, 'Parsing error');
       ctx.throw('body parse error', 422);
-    }
-  })
+    },
+  }),
 );
 app.use(router.routes());
 app.use(router.allowedMethods());

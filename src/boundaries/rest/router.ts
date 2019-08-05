@@ -6,9 +6,9 @@ const router = new Router({
 });
 
 router
-  .all('/graphl', () => {
-    /* should be rewritten by appollo */
-  })
+  // .all('/graphql', () => {
+  //   /* should be rewritten by appollo */
+  // })
   .get('/', async ctx => {
     ctx.body = { status: 'OK' };
   });

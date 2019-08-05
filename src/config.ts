@@ -5,16 +5,16 @@ import { LevelWithSilent } from 'pino';
 load({
   allowEmptyValues: true,
   path: join(__dirname, '..', '.env'),
-  sample: join(__dirname, '..', '.env.example')
+  sample: join(__dirname, '..', '.env.example'),
 });
 
 export default {
   logLevel: process.env.LOG_LEVEL! as LevelWithSilent,
   http: {
-    port: parseInt(process.env.HTTP_PORT!, 10)
+    port: parseInt(process.env.HTTP_PORT!, 10),
   },
   db: {
-    uri: process.env.MONGO_URI!
+    uri: process.env.MONGO_URI!,
   },
-  shutdownTimeout: parseInt(process.env.SHUTDOWN_TIMEOUT!, 10)
+  shutdownTimeout: parseInt(process.env.SHUTDOWN_TIMEOUT!, 10),
 };

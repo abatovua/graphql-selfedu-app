@@ -1,7 +1,10 @@
-import { extname, join } from 'path';
-
 import { ApolloServer, Config } from 'apollo-server-koa';
 import { buildSchema } from 'type-graphql';
+
+import { TypegooseMiddleware } from '~/middlewares/typegoose';
+
+// Resolvers
+import { UsersResolver } from '../modules/user/UserResolver';
 
 import logger from '~/logger';
 import app from './rest';
@@ -11,16 +14,19 @@ export let server: ApolloServer;
 export async function start() {
   const options: Config = {
     schema: await buildSchema({
-      resolvers: [join(__dirname, '..', 'resolvers', `*${extname(__filename)}`)],
-      validate: false
+      resolvers: [UsersResolver],
+      // NOTE: should be true for 'class-validator' work properly
+      validate: true,
+      globalMiddlewares: [TypegooseMiddleware],
+      emitSchemaFile: true,
     }),
     introspection: true,
     playground: true,
     formatError: (error: any) => {
-      logger.info(error);
+      logger.error(error);
       return error;
     },
-    extensions: []
+    extensions: [],
   };
 
   server = new ApolloServer(options);

@@ -1,4 +1,5 @@
 import Signals = NodeJS.Signals;
+// import Timeout = NodeJS.Timeout;
 
 import config from '~/config';
 import logger from '~/logger';
@@ -27,7 +28,7 @@ export async function bootstrap(start: () => Promise<void>, stop: () => Promise<
     if (stopping) return;
     stopping = true;
     logger.info('Stopping...');
-    const shutdownTimeout = setTimeout(() => {
+    const shutdownTimeout: any = setTimeout(() => {
       logger.error('Stopped forcefully, but we have something in Event Loop');
       process.exit(1);
     }, config.shutdownTimeout);

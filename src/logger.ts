@@ -7,6 +7,6 @@ export default Logger({
   level: config.logLevel,
   redact: {
     paths: ['pid', 'hostname'],
-    remove: true
-  }
+    remove: true,
+  },
 });
