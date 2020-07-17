@@ -20,7 +20,7 @@
     "koa": "^2.7.0",
     "koa-bodyparser": "^4.2.1",
     "koa-router": "^7.4.0",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.19",
     "mongodb": "^3.2.4",
     "mongoose": "^5.5.9",
     "pino": "^5.11.3",
