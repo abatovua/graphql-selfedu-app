@@ -25,7 +25,7 @@
     "mongoose": "^5.5.9",
     "pino": "^5.11.3",
     "reflect-metadata": "^0.1.13",
-    "type-graphql": "^0.17.4",
+    "type-graphql": "^0.17.6",
     "typegoose": "^5.7.2"
   },
   "devDependencies": {
